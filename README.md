@@ -8,6 +8,7 @@
     * [Hook: useEffect](https://react.dev/reference/react/useEffect)
     * [Hook: useReducer](https://es.react.dev/reference/react/useReducer)
         * [useReducer ejemplo](https://es.react.dev/learn/extracting-state-logic-into-a-reducer)
+    * [Router](https://reactrouter.com/en/main/start/tutorial)
 
 * [Vite](https://vitejs.dev/): Para levantar un proyecto con React rapidamente
 * Extensiones para VS Code y Google Chrome:

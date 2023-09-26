@@ -4,8 +4,11 @@
 
 * React:
     * [Documentación de React](https://es.react.dev/)
-    * [Hooks: useState](https://es.react.dev/reference/react/useState)
-    * [Hooks: useEffect](https://react.dev/reference/react/useEffect)
+    * [Hook: useState](https://es.react.dev/reference/react/useState)
+    * [Hook: useEffect](https://react.dev/reference/react/useEffect)
+    * [Hook: useReducer](https://es.react.dev/reference/react/useReducer)
+        * [useReducer ejemplo](https://es.react.dev/learn/extracting-state-logic-into-a-reducer)
+
 * [Vite](https://vitejs.dev/): Para levantar un proyecto con React rapidamente
 * Extensiones para VS Code y Google Chrome:
     * [Material icon theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme)

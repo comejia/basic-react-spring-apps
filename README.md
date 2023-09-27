@@ -24,3 +24,5 @@
     * [Download](https://getbootstrap.com/docs/5.3/getting-started/download/#cdn-via-jsdelivr)
 
 * [Session storage](https://developer.mozilla.org/es/docs/Web/API/Window/sessionStorage)
+
+* [Sweetaler](https://sweetalert2.github.io/)

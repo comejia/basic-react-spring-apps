@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Swal from "sweetalert2"
+import { UserContext } from "../context/UserContext"
 
-export const UserForm = ({userSelected, initialUserForm, handlerAddUser, handlerCloseForm}) => {
+export const UserForm = ( {userSelected, handlerCloseForm} ) => {
+
+    const {initialUserForm, handlerAddUser} = useContext(UserContext)
 
     const [userForm, setUserForm] = useState(initialUserForm)
+
     const {id, username, password, email} = userForm
 
     useEffect(() => {
@@ -31,6 +35,16 @@ export const UserForm = ({userSelected, initialUserForm, handlerAddUser, handler
             )
             return
         }
+
+        if(!email.includes('@')) {
+            Swal.fire(
+                'Error de validacion email',
+                'El email debe ser valido, incluir un @',
+                'error'
+            )
+            return
+        }
+
         handlerAddUser(userForm)
         setUserForm(initialUserForm)
     }
@@ -71,12 +85,14 @@ export const UserForm = ({userSelected, initialUserForm, handlerAddUser, handler
                     type="submit">
                     {id > 0 ? 'Editar' : 'Crear'}
                 </button>
-                <button
-                    className="btn btn-primary mx-2"
-                    type="button"
-                    onClick={() => onCloseForm()}>
-                    Cerrar
-                </button>
+                { !handlerCloseForm ||
+                    <button
+                        className="btn btn-primary mx-2"
+                        type="button"
+                        onClick={() => onCloseForm()}>
+                        Cerrar
+                    </button>
+                }
             </form>
         </>
     )

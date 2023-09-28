@@ -8,9 +8,11 @@
     * [Hook: useEffect](https://react.dev/reference/react/useEffect)
     * [Hook: useReducer](https://es.react.dev/reference/react/useReducer)
         * [useReducer ejemplo](https://es.react.dev/learn/extracting-state-logic-into-a-reducer)
+    * [Hook: useContext](https://es.react.dev/learn/passing-data-deeply-with-context)
     * [Router](https://reactrouter.com/en/main/start/tutorial)
 
 * [Vite](https://vitejs.dev/): Para levantar un proyecto con React rapidamente
+
 * Extensiones para VS Code y Google Chrome:
     * [Material icon theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme)
     * [Auto rename tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)

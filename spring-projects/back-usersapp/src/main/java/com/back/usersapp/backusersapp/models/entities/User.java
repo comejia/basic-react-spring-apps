@@ -29,8 +29,8 @@ public class User {
     @NotBlank
     private String password;
 
-    @Email
     @NotBlank
+    @Email
     @Column(unique = true)
     private String email;
 }

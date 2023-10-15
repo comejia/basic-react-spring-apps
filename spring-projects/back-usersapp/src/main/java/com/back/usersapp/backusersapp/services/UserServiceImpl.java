@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.back.usersapp.backusersapp.models.entities.User;
+import com.back.usersapp.backusersapp.models.request.UserRequest;
 import com.back.usersapp.backusersapp.repositories.UserRepository;
 
 @Service
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Optional<User> update(User user, Long id) {
+    public Optional<User> update(UserRequest user, Long id) {
         Optional<User> o = findById(id);
         if(o.isPresent()) {
             User usr = o.get();

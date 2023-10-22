@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.back.usersapp.backusersapp.auth.filters.JWTAuthenticationFilter;
+import com.back.usersapp.backusersapp.auth.filters.JWTValidationFilter;
 
 @Configuration
 public class SpringSecurityConfig {
@@ -39,6 +40,7 @@ public class SpringSecurityConfig {
                                 .anyRequest()
                                 .authenticated())
             .addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
+            .addFilter(new JWTValidationFilter(authenticationConfiguration.getAuthenticationManager()))
             .csrf(config -> config.disable())
             .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .build();

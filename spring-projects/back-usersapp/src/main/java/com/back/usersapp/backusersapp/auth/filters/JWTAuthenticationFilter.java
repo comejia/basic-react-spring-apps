@@ -21,6 +21,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static com.back.usersapp.backusersapp.auth.JwtConfig.*;
+
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
@@ -61,10 +63,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authResult.getPrincipal();
 
-        String original = "mi_token." + user.getUsername();
+        String original = SECRET_KEY + "." + user.getUsername();
         String token = Base64.getEncoder().encodeToString(original.getBytes());
 
-        response.addHeader("Authorization", "Bearear " + token);
+        response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN + token);
 
         Map<String, Object> body = new HashMap<>();
 

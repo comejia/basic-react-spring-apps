@@ -1,7 +1,7 @@
 package com.back.usersapp.backusersapp.auth.filters;
 
 import java.io.IOException;
-import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,8 +64,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authResult.getPrincipal();
 
-        String original = SECRET_KEY + "." + user.getUsername();
-        String token = Base64.getEncoder().encodeToString(original.getBytes());
+        String token = Jwts.builder()
+                .subject(user.getUsername())
+                .signWith(SECRET_KEY)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 3600000))
+                .compact();
 
         response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN + token);
 

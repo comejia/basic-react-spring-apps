@@ -18,3 +18,7 @@
 * [MySQL](https://www.mysql.com/downloads/)
 
 * [Postman](https://www.postman.com/)
+
+* [JWT](https://jwt.io/)
+
+* [Java JWT](https://github.com/jwtk/jjwt)

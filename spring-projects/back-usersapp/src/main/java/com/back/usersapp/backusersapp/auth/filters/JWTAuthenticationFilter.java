@@ -1,6 +1,7 @@
 package com.back.usersapp.backusersapp.auth.filters;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.back.usersapp.backusersapp.models.entities.User;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -64,7 +67,17 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authResult.getPrincipal();
 
+        Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
+
+        boolean isAdmin = roles.stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+
+        Claims claims = Jwts.claims()
+                .add("authorities", new ObjectMapper().writeValueAsString(roles))
+                .add("isAdmin", isAdmin)
+                .build();
+
         String token = Jwts.builder()
+                .claims(claims)
                 .subject(user.getUsername())
                 .signWith(SECRET_KEY)
                 .issuedAt(new Date())

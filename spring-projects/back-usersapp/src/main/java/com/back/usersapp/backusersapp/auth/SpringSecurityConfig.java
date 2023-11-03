@@ -35,10 +35,18 @@ public class SpringSecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
             .authorizeHttpRequests(
-                authorize -> authorize.requestMatchers(HttpMethod.GET, "/users")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated())
+                authorize -> authorize.requestMatchers(HttpMethod.GET, "/users").permitAll()
+                                //.anyRequest()
+                                //.authenticated())
+            )
+            .authorizeHttpRequests(
+                authorize -> authorize.requestMatchers(HttpMethod.GET, "/users/{id}").hasAnyRole("USER", "ADMIN"))
+            .authorizeHttpRequests(
+                authorize -> authorize.requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN"))
+            .authorizeHttpRequests(
+                authorize -> authorize.requestMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("ADMIN"))
+            .authorizeHttpRequests(
+                authorize -> authorize.requestMatchers(HttpMethod.PUT, "/users/{id}").hasRole("ADMIN"))
             .addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
             .addFilter(new JWTValidationFilter(authenticationConfiguration.getAuthenticationManager()))
             .csrf(config -> config.disable())

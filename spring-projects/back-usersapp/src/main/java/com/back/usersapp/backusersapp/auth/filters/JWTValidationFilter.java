@@ -1,9 +1,9 @@
 package com.back.usersapp.backusersapp.auth.filters;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.back.usersapp.backusersapp.auth.SimpleGrantedAuthorityJsonCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
@@ -47,10 +48,19 @@ public class JWTValidationFilter extends BasicAuthenticationFilter {
         try {
             Claims claims = Jwts.parser().verifyWith(SECRET_KEY).build().parseSignedClaims(token).getPayload();
 
-            List<GrantedAuthority> authtorities = new ArrayList<>();
-            authtorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+            Object authoritiesClaims = claims.get("authorities");
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authtorities);
+            Collection<? extends GrantedAuthority> authtorities = Arrays.asList(
+                new ObjectMapper()
+                    .addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityJsonCreator.class)
+                    .readValue(authoritiesClaims.toString().getBytes(), SimpleGrantedAuthority[].class)
+            );
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                claims.getSubject(), 
+                null, 
+                authtorities);
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
         } catch(JwtException e) {
@@ -62,8 +72,5 @@ public class JWTValidationFilter extends BasicAuthenticationFilter {
             response.setStatus(403);
             response.setContentType("application/json");
         }
-
-    }
-
-    
+    }    
 }

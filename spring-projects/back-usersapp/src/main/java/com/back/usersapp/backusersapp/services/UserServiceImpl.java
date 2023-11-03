@@ -1,5 +1,6 @@
 package com.back.usersapp.backusersapp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,8 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.back.usersapp.backusersapp.models.entities.Role;
 import com.back.usersapp.backusersapp.models.entities.User;
 import com.back.usersapp.backusersapp.models.request.UserRequest;
+import com.back.usersapp.backusersapp.repositories.RoleRepository;
 import com.back.usersapp.backusersapp.repositories.UserRepository;
 
 @Service
@@ -17,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -38,6 +44,16 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         String passwordBCrypt = passwordEncoder.encode(user.getPassword());
         user.setPassword(passwordBCrypt);
+
+        Optional<Role> o = roleRepository.findByName("ROLE_USER");
+        List<Role> roles = new ArrayList<>();
+
+        if (o.isPresent()) {
+            roles.add(o.orElseThrow());   
+        }
+
+        user.setRoles(roles);
+
         return repository.save(user);
     }
 

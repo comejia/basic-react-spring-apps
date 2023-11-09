@@ -2,6 +2,8 @@ package com.back.usersapp.backusersapp.models.entities;
 
 import java.util.List;
 
+import com.back.usersapp.backusersapp.models.IUser;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,7 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements IUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,4 +50,7 @@ public class User {
         //uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id, role_id"})}
     )
     private List<Role> roles;
+
+    @Transient
+    private boolean admin;
 }

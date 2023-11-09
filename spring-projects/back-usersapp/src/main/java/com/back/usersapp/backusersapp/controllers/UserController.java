@@ -30,7 +30,7 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping(path = "/users")
 public class UserController {
-    
+
     @Autowired
     private UserService service;
 
@@ -62,6 +62,7 @@ public class UserController {
         if(result.hasErrors()) {
             return validation(result);
         }
+        System.out.println("LOGGG " + user.isAdmin());
         Optional<UserDto> o = service.update(user, id);
         if(o.isPresent()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(o.get()); // 201

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.back.usersapp.backusersapp.models.IUser;
 import com.back.usersapp.backusersapp.models.dto.UserDto;
 import com.back.usersapp.backusersapp.models.dto.mapper.DtoMapperUser;
 import com.back.usersapp.backusersapp.models.entities.Role;
@@ -55,14 +56,7 @@ public class UserServiceImpl implements UserService {
         String passwordBCrypt = passwordEncoder.encode(user.getPassword());
         user.setPassword(passwordBCrypt);
 
-        Optional<Role> o = roleRepository.findByName("ROLE_USER");
-        List<Role> roles = new ArrayList<>();
-
-        if (o.isPresent()) {
-            roles.add(o.orElseThrow());   
-        }
-
-        user.setRoles(roles);
+        user.setRoles(getRoles(user));
 
         return DtoMapperUser.builder().setUser(repository.save(user)).build();
     }
@@ -75,6 +69,7 @@ public class UserServiceImpl implements UserService {
             User usr = o.get();
             usr.setUsername(user.getUsername());
             usr.setEmail(user.getEmail());
+            usr.setRoles(getRoles(user));
             return Optional.of(DtoMapperUser.builder().setUser(repository.save(usr)).build());
         }
         return Optional.empty();
@@ -84,5 +79,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public void remove(Long id) {
         repository.deleteById(id);
-    }    
+    }
+
+    private List<Role> getRoles(IUser user) {
+        Optional<Role> ou = roleRepository.findByName("ROLE_USER");
+        List<Role> roles = new ArrayList<>();
+
+        if (ou.isPresent()) {
+            roles.add(ou.orElseThrow());
+        }
+
+        if (user.isAdmin()) {
+            Optional<Role> oa = roleRepository.findByName("ROLE_ADMIN");
+            if (oa.isPresent()) {
+                roles.add(oa.orElseThrow());
+            }
+        }
+        return roles;
+    }
 }

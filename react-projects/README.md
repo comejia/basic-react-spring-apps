@@ -28,3 +28,9 @@
 * [Session storage](https://developer.mozilla.org/es/docs/Web/API/Window/sessionStorage)
 
 * [Sweetaler](https://sweetalert2.github.io/)
+
+* Redux
+    * [Documentación](https://redux.js.org/)
+    * [Data flow](https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow#redux-application-data-flow)
+    * [Toolkit](https://redux-toolkit.js.org/)
+    * Chrome Extension: Redux DevTools

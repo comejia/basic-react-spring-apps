@@ -6,7 +6,7 @@ import { addUser, loadingUser, initialUserForm, onCloseForm, onOpenForm, onUserS
 import { useAuth } from "../auth/hooks/useAuth"
 
 export const useUsers = () => {
-    const { users, userSelected, visibleForm, errors } = useSelector(state => state.users)
+    const { users, userSelected, visibleForm, errors, isLoading } = useSelector(state => state.users)
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
@@ -109,6 +109,7 @@ export const useUsers = () => {
         initialUserForm,
         visibleForm,
         errors,
+        isLoading,
         handlerAddUser,
         handlerRemoveUser,
         handlerUserSelectedForm,

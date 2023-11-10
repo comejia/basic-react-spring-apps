@@ -11,7 +11,9 @@
     * [Hook: useContext](https://es.react.dev/learn/passing-data-deeply-with-context)
     * [Router](https://reactrouter.com/en/main/start/tutorial)
 
-* [Vite](https://vitejs.dev/): Para levantar un proyecto con React rapidamente
+* Vite:
+    * [Documentación](https://vitejs.dev/): Para levantar un proyecto con React rapidamente
+    * [Environments](https://vitejs.dev/guide/env-and-mode.html#env-files)
 
 * Extensiones para VS Code y Google Chrome:
     * [Material icon theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme)

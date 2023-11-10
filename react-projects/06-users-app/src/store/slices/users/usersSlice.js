@@ -22,7 +22,8 @@ export const usersSlice = createSlice({
         users: [],
         userSelected: initialUserForm,
         visibleForm: false,
-        errors: initialErrors
+        errors: initialErrors,
+        isLoading: true
     },
     reducers: {
         addUser: (state, action) => {
@@ -52,6 +53,7 @@ export const usersSlice = createSlice({
         },
         loadingUser: (state, action) => {
             state.users = action.payload
+            state.isLoading = false
         },
         onUserSelectedForm: (state, action) => {
             state.userSelected = action.payload

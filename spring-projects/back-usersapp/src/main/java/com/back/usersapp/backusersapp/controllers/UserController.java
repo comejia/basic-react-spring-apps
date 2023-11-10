@@ -27,7 +27,7 @@ import com.back.usersapp.backusersapp.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(originPatterns = "*") //origins = http://localhost:5173
 @RequestMapping(path = "/users")
 public class UserController {
 
